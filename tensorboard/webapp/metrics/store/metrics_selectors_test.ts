@@ -512,6 +512,25 @@ describe('metrics selectors', () => {
     });
   });
 
+  describe('getPrePinnedCards', () => {
+    it('returns false if no card exists', () => {
+      selectors.getPrePinnedCards.release();
+
+      const state = appStateFromMetricsState(
+        buildMetricsState({
+          prePinnedCards: [
+            {tag: 'accuracy'},
+            {tag: 'output', runId: 'exp1/run1', sample: 5},
+          ],
+        })
+      );
+      expect(selectors.getPrePinnedCards(state)).toEqual([
+        {tag: 'accuracy'},
+        {tag: 'output', runId: 'exp1/run1', sample: 5},
+      ]);
+    });
+  });
+
   describe('settings', () => {
     it('returns tooltipSort when called getMetricsTooltipSort', () => {
       selectors.getMetricsTooltipSort.release();
